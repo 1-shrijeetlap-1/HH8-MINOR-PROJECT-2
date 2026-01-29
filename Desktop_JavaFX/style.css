@@ -1,1 +1,101 @@
 
+/* Global variables for dark theme */
+.root {
+    -fx-base: #1e1e2e;
+    -fx-background-color: #1e1e2e;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -primary-color: #89b4fa;
+    -secondary-color: #a6e3a1;
+    -accent-color: #f38ba8;
+    -text-color: #cdd6f4;
+    -surface-color: #313244;
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: -text-color;
+    -fx-font-size: 14px;
+}
+
+/* Headers */
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(137, 180, 250, 0.4), 10, 0, 0, 0);
+}
+
+/* Text Area */
+.text-area {
+    -fx-text-fill: -text-color;
+    -fx-background-color: -surface-color;
+    -fx-control-inner-background: -surface-color;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #45475a;
+    -fx-border-width: 1;
+    -fx-prompt-text-fill: #6c7086;
+    -fx-padding: 10;
+}
+
+.text-area:focused {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(137, 180, 250, 0.2), 5, 0, 0, 0);
+}
+
+.text-area .content {
+    -fx-background-color: -surface-color;
+}
+
+/* Password Field */
+.password-field {
+    -fx-background-color: -surface-color;
+    -fx-text-fill: -text-color;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #45475a;
+    -fx-border-width: 1;
+    -fx-prompt-text-fill: #6c7086;
+    -fx-padding: 8 15;
+}
+
+.password-field:focused {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(137, 180, 250, 0.2), 5, 0, 0, 0);
+}
+
+/* Buttons */
+.button {
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-text-fill: #1e1e2e; /* Dark text on buttons for contrast */
+}
+
+.save-button {
+    -fx-background-color: -primary-color;
+}
+
+.save-button:hover {
+    -fx-background-color: derive(-primary-color, 20%);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.load-button {
+    -fx-background-color: -secondary-color;
+}
+
+.load-button:hover {
+    -fx-background-color: derive(-secondary-color, 20%);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Strength Label */
+.strength-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
