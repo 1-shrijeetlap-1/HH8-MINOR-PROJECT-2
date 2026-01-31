@@ -1,0 +1,153 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+import java.io.File;
+import java.util.Arrays;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javax.crypto.AEADBadTagException;
+
+public class SecureNotesFX extends Application {
+   public SecureNotesFX() {
+   }
+
+   public void start(Stage var1) {
+      var1.setTitle("Secure Notes Vault");
+      TextArea var2 = new TextArea();
+      var2.setPromptText("Write your secret note here...");
+      var2.setWrapText(true);
+      var2.getStyleClass().add("text-area");
+      PasswordField var3 = new PasswordField();
+      var3.setPromptText("Encryption Password");
+      var3.setPrefWidth(250.0);
+      var3.getStyleClass().add("password-field");
+      Label var4 = new Label("Strength: N/A");
+      var4.getStyleClass().add("strength-label");
+      Button var5 = new Button("Encrypted Save");
+      var5.getStyleClass().addAll(new String[]{"button", "save-button"});
+      Button var6 = new Button("Decrypt Load");
+      var6.getStyleClass().addAll(new String[]{"button", "load-button"});
+      VBox var7 = new VBox(5.0);
+      var7.setAlignment(Pos.CENTER_LEFT);
+      var7.setPadding(new Insets(0.0, 0.0, 10.0, 0.0));
+      Label var8 = new Label("Secure Notes");
+      var8.getStyleClass().add("header-label");
+      Label var9 = new Label("AES-256 GCM Encrypted Storage");
+      var9.setStyle("-fx-text-fill: #bcc0cc; -fx-font-size: 12px;");
+      var7.getChildren().addAll(new Node[]{var8, var9});
+      HBox var10 = new HBox(15.0);
+      var10.setAlignment(Pos.CENTER_LEFT);
+      var10.setPadding(new Insets(15.0, 0.0, 0.0, 0.0));
+      var10.getChildren().addAll(new Node[]{var3, var5, var6});
+      HBox var11 = new HBox(10.0);
+      var11.setAlignment(Pos.CENTER_RIGHT);
+      var11.setPadding(new Insets(5.0, 0.0, 0.0, 0.0));
+      var11.getChildren().add(var4);
+      BorderPane var12 = new BorderPane();
+      var12.setPadding(new Insets(25.0));
+      var12.setTop(var7);
+      var12.setCenter(var2);
+      VBox var13 = new VBox(10.0);
+      var13.getChildren().addAll(new Node[]{var10, var11});
+      var12.setBottom(var13);
+      var3.textProperty().addListener((var1x, var2x, var3x) -> {
+         String var4x = SecurityUtil.checkStrength(var3x);
+         var4.setText("Strength: " + var4x);
+         var4.setStyle("");
+         if (var4x.startsWith("Weak")) {
+            var4.setStyle("-fx-text-fill: #f38ba8;");
+         } else if (var4x.equals("Medium")) {
+            var4.setStyle("-fx-text-fill: #fab387;");
+         } else {
+            var4.setStyle("-fx-text-fill: #a6e3a1;");
+         }
+
+      });
+      var5.setOnAction((var4x) -> {
+         String var5 = var3.getText();
+         if (var5.isEmpty()) {
+            this.showAlert(AlertType.WARNING, "Password Required", "Please enter a password to encrypt your note.");
+         } else {
+            FileChooser var6 = new FileChooser();
+            var6.setTitle("Save Encrypted Note");
+            var6.getExtensionFilters().add(new FileChooser.ExtensionFilter("Encrypted Notes", new String[]{"*.enc"}));
+            File var7 = var6.showSaveDialog(var1);
+            if (var7 != null) {
+               char[] var8 = var5.toCharArray();
+
+               try {
+                  SecurityUtil.save(var2.getText(), var8, var7);
+                  this.showAlert(AlertType.INFORMATION, "Success", "Note encrypted and saved securely.");
+                  var2.clear();
+                  var3.clear();
+               } catch (Exception var13) {
+                  this.showAlert(AlertType.ERROR, "Encryption Error", "Failed to save note: " + var13.getMessage());
+               } finally {
+                  Arrays.fill(var8, '\u0000');
+               }
+
+            }
+         }
+      });
+      var6.setOnAction((var4x) -> {
+         String var5 = var3.getText();
+         if (var5.isEmpty()) {
+            this.showAlert(AlertType.WARNING, "Password Required", "Please enter the password to decrypt the note.");
+         } else {
+            FileChooser var6 = new FileChooser();
+            var6.setTitle("Open Encrypted Note");
+            var6.getExtensionFilters().add(new FileChooser.ExtensionFilter("Encrypted Notes", new String[]{"*.enc"}));
+            File var7 = var6.showOpenDialog(var1);
+            if (var7 != null) {
+               char[] var8 = var5.toCharArray();
+
+               try {
+                  String var9 = SecurityUtil.load(var8, var7);
+                  var2.setText(var9);
+                  var3.clear();
+               } catch (Exception var14) {
+                  var2.clear();
+                  String var10 = var14.getMessage();
+                  if (var14 instanceof AEADBadTagException) {
+                     var10 = "Incorrect Password or Corrupted File.";
+                  }
+
+                  this.showAlert(AlertType.ERROR, "Decryption Error", var10);
+               } finally {
+                  Arrays.fill(var8, '\u0000');
+               }
+
+            }
+         }
+      });
+      Scene var14 = new Scene(var12, 700.0, 550.0);
+      String var15 = this.getClass().getResource("style.css").toExternalForm();
+      var14.getStylesheets().add(var15);
+      var1.setScene(var14);
+      var1.show();
+   }
+
+   private void showAlert(Alert.AlertType var1, String var2, String var3) {
+      Alert var4 = new Alert(var1);
+      var4.setTitle(var2);
+      var4.setHeaderText((String)null);
+      var4.setContentText(var3);
+      var4.showAndWait();
+   }
+
+   public static void main(String[] var0) {
+      launch(new String[0]);
+   }
+}
