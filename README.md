@@ -2,6 +2,9 @@
 
 Welcome to the Secure Notes App project! This repository contains a cross-platform solution for securely storing sensitive personal notes using industry-standard cryptography.
 
+##If any problem in github project go to this google drive link:- 
+https://drive.google.com/file/d/12SauCQkPSWjLz1U3z0hSkUMVyjCPIHho/view?usp=drivesdk
+
 ## Project Structure
 
 This project is divided into two main components:
@@ -21,6 +24,7 @@ A mobile version of the Secure Notes App.
 *   **Planned Features**: Android Keystore integration, Biometric authentication.
 
 ---
+<img width="883" height="733" alt="Screenshot 2026-01-31 181211" src="https://github.com/user-attachments/assets/3c68e217-a402-4866-971a-4d7d5f19f872" />
 
 ## Desktop App: Quick Start
 
