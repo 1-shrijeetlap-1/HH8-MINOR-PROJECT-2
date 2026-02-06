@@ -21,4 +21,3 @@ This application uses state-of-the-art cryptography to ensure your data is safe:
 ## Requirements
 - Java JDK 17 or higher
 - JavaFX 21 SDK (Included locally)
-

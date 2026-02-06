@@ -120,4 +120,3 @@ public class SecurityUtil {
         return "Strong";
     }
 }
-
