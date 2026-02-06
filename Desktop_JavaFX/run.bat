@@ -9,4 +9,3 @@ if %errorlevel% neq 0 (
 echo Starting Secure Notes App...
 java --module-path "javafx-sdk\javafx-sdk-21\lib" --add-modules javafx.controls,javafx.fxml SecureNotesFX
 pause
-

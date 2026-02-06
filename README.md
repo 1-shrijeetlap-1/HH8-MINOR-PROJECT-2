@@ -1,4 +1,5 @@
-# HH8-MINOR-PROJECT-2
+# Secure Notes App Project
+
 Welcome to the Secure Notes App project! This repository contains a cross-platform solution for securely storing sensitive personal notes using industry-standard cryptography.
 
 ## Project Structure
@@ -31,8 +32,6 @@ A mobile version of the Secure Notes App.
 2.  Double-click `run.bat` to compile and launch the app.
 3.  **To Save**: Type your note, enter a password, and click **Encrypted Save**. Choose a filename.
 4.  **To Load**: Enter the same password and click **Decrypt Load**. Select your file.
-
-<img width="883" height="733" alt="Screenshot 2026-01-31 181211" src="https://github.com/user-attachments/assets/18c6abbc-d2a4-4c0b-b3a8-70a007200035" />
 
 ## Security Architecture
 
